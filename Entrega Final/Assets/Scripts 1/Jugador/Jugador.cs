@@ -24,6 +24,7 @@ public class Jugador : MonoBehaviour
     public float Sensi = 30f;
     private float rotationX = 0;
     private float rotationY = 0;
+    private bool disparado = false;
     
  
     Vector2 mouseLook;
@@ -31,37 +32,34 @@ public class Jugador : MonoBehaviour
     private void Awake()
     {
         
-        Cursor.lockState = CursorLockMode.Locked;
-        controles = new Controles1();
-        playerInputs = controles.ControlesJugador;
+        
+        controles = new Controles1();// inicio el inputmap
+        playerInputs = controles.ControlesJugador;// instancio el inputmap
         controles.Enable();
 
     }
     // Start is called before the first frame update
     void Start()
-    {
-       
-       
+    {    
         proyectil = bola;
-       
     }
 
     // Update is called once per frame
     void Update()
     {
         Look();
-
-
     }
 
     private void Look()
     {
         mouseLook = controles.ControlesJugador.Mirar.ReadValue<Vector2>();
-        float mouseX = mouseLook.x * Sensi * Time.deltaTime;
+        // Accedo del inputmap al mapa de acciones, de ahi a las acciones y por ultimno la accion
+        // cuyo input es el delta del mouse asignandole el valor a una variable
+        float mouseX = mouseLook.x * Sensi * Time.deltaTime;//normalizo y doy sensibilidad
         float mouseY = mouseLook.y * Sensi * Time.deltaTime;
         rotationX -= mouseY;
         rotationY += mouseX;
-        rotationY = Mathf.Clamp(rotationY, -90, 90);
+        rotationY = Mathf.Clamp(rotationY, -90, 90);//limito el campo de vision
         rotationX = Mathf.Clamp(rotationX, -90, 90);
         transform.localRotation = Quaternion.Euler(rotationX,rotationY,0);
         // Consigo una variable que toma los valores del V2 del movimiento del mouse.
@@ -72,9 +70,9 @@ public class Jugador : MonoBehaviour
 
     private void FixedUpdate()
     {
-       
+        Dispararse();
     }
-
+    //cada input asigna el proyectil a disparar
     public void OnSeleccionarbola(InputValue valor)
     {
        proyectil = bola;
@@ -103,10 +101,19 @@ public class Jugador : MonoBehaviour
 
     private void OnDisparar(InputValue valor)
     {
-        proyectil = Instantiate(proyectil, cam.transform.position, proyectil.transform.rotation);
-        proyectil.GetComponent<Rigidbody>().AddForce(jugador.transform.forward * 1000000, ForceMode.Impulse);
-        contador ++;
+        disparado = true;
+        // El input devuleve un booleano dado que no pueden convivir las fisicas con los inputs
+    }
 
+    private void Dispararse()
+    {
+        if(disparado == true)
+        {
+            proyectil = Instantiate(proyectil, cam.transform.position, proyectil.transform.rotation);// instancio el proyectil
+            proyectil.GetComponent<Rigidbody>().AddForce(jugador.transform.forward * 150, ForceMode.Impulse); //aplico la fuerza de disparo
+            contador++;
+            disparado = false;
+        }
     }
    
 
