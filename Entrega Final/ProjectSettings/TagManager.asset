@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Slime
+  - player
+  - bullet
+  - iman+
+  - iman-
+  - bola
+  - soga
   layers:
   - Default
   - TransparentFX

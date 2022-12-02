@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;// bloqueo el cursor
         MenuInicio.SetActive(false);
         Time.timeScale = 1f;
+        Jugador.GetComponent<Jugador>().ActivarControles();
     }
 
     public void AbrirOpciones()
@@ -63,6 +64,7 @@ public class UIManager : MonoBehaviour
         MenuPausa.SetActive(true );
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 0f;
+        Jugador.GetComponent<Jugador>().DesactivarControles();
     }
 
     public void SalirPausa()
@@ -70,6 +72,7 @@ public class UIManager : MonoBehaviour
         MenuPausa.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
+        Jugador.GetComponent<Jugador>().ActivarControles();
     }
 
     public void Cerrarjuego()

@@ -376,6 +376,7 @@
 "Assets/Scripts 1/Proyectiles/Proyectil.cs"
 "Assets/Scripts 1/Proyectiles/Slime.cs"
 "Assets/Scripts 1/Puertas/Puertas.cs"
+"Assets/Scripts 1/SavePoint.cs"
 "Assets/Scripts 1/UIManager.cs"
 -langversion:9.0
 
